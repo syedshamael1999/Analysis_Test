@@ -1,5 +1,19 @@
 # Report - Insights & Recommendation
 
+The task involved analyzing 3 months of TCL sell-out data, alongside a market status report containing brand-level sales and market share. The goal is to provide a clear, data-backed summary of where TCL stands in the market — and how it can improve in upcoming quarters.
+
+### Objective:
+- Identify problems in TCL's sales performance
+- Highlight weak areas across products, stores, and regions
+- Benchmark TCL against competitors using market data
+- Provide clear, actionable recommendations for improvement
+
+### Steps Taken:
+- Merged the 3 Month data `Sellout_Q4.csv`
+- Data Required some cleaning - Some cells dint follow Revenue = Quantity * Price.
+- Analyzed with SQL (MS SQL) -> Found Insights -> Report
+---
+
 ## (I) Sellout Q4 Analysis
 ---
 ### 1. TCL Sales and Quantity Trend by Month
@@ -305,9 +319,7 @@ ORDER BY PERIOD;
 ```
 ---
 
-### 2. Brand Comparison
-
-## 📊 Competitor Comparison – January 2024
+### 2. Competitor Comparison – January 2024
 
 | Rank | Brand         | Units Sold | Revenue (SAR) |
 |------|---------------|------------|---------------|
@@ -347,6 +359,27 @@ GROUP BY
   END
 ORDER BY Revenue DESC;
 ```
+---
+
+# ✅ Conclusion Summary
+
+### 1. What TCL does wrong or has Setbacks in
+- Sales dropped in December (−5.4% units, −10.9% revenue)
+- Over 20 models sold fewer than 10 units — including high-end models
+- Significant pricing inconsistencies (SAR 349 to SAR 99,999)
+- Underperformance in the Southern region (only ~8.7M SAR revenue)
+- Lower average selling price compared to competitors like LG
+- Some retail partners and store locations underperforming
+
+### 2. Solution / Recommendation
+- Focus promotions and stock on 65” models and high-value SKUs (75"+)
+- Phase out slow-moving models; fix visibility and pricing for high-end ones
+- Standardize pricing across locations; flag and review outliers
+- Reinvest in high-performing stores; audit and optimize low performers
+- Strengthen partnerships with Extra and Manea; assess weaker retailers
+- Boost investment in Central & West; improve coverage in South
+- Push premium model sales to grow revenue per unit
+- Continue strategies that led to market share growth
 
 
 
