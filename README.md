@@ -27,7 +27,10 @@ The task involved analyzing 3 months of TCL sell-out data, alongside a market st
 | 11    | 8,176      | 21,813,068    | 764     | 10.3%      | 1,216,040  | 5.9%          |
 | 12    | 7,735      | 19,427,642    | -441    | -5.4%      | -2,385,426 | -10.9%        |
 
----
+
+![image](https://github.com/user-attachments/assets/05c60e2c-f280-483a-839b-5746f28bf866)
+
+
 
 ### 🔍 Insight
 - Massive growth in October (likely campaign-driven)
