@@ -16,7 +16,7 @@ The task involved analyzing 3 months of TCL sell-out data, alongside a market st
 
 ## (I) Sellout Q4 Analysis
 ---
-### 1. ## 📆 Monthly Sales Trend
+### 1. 📆 Monthly Sales Trend
 
 ### 📊 Summary Table
 
