@@ -1,8 +1,9 @@
-# Report
+# Report - Insights & Recommendation
 
 ## (I) Sellout Q4 Analysis
 ---
 ### 1. TCL Sales and Quantity Trend by Month
+
 
 | Month | Total Units Sold | Total Revenue  | Units Diff | Units % Change   | Revenue Diff  | Revenue % Change |
 |-------|------------------|----------------|------------|------------------|---------------|------------------|
@@ -16,6 +17,28 @@
 - Oct boom: Units jumped 1,033% (from 654 to 7,412), revenue up 999% — likely campaign launch or seasonal spike.  
 - Nov peak: Continued growth (+10% units, +6% revenue).  
 - Dec dip: Sales dropped by 441 units (-5.4%), revenue down 2.4M SAR (-10.9%).
+
+```SQL
+SELECT
+  Month,
+  SUM(Quantity) AS Total_Units_Sold,
+  SUM(Revenue) AS Total_Revenue,
+
+  -- Difference from previous month
+  SUM(Quantity) - LAG(SUM(Quantity)) OVER (ORDER BY Month) AS Units_Diff,
+
+  ROUND((SUM(Quantity) - LAG(SUM(Quantity)) OVER (ORDER BY Month)) * 100.0 /
+        NULLIF(LAG(SUM(Quantity)) OVER (ORDER BY Month), 0), 1) AS Units_Percent_Change,
+
+  SUM(Revenue) - LAG(SUM(Revenue)) OVER (ORDER BY Month) AS Revenue_Diff,
+
+  ROUND((SUM(Revenue) - LAG(SUM(Revenue)) OVER (ORDER BY Month)) * 100.0 /
+        NULLIF(LAG(SUM(Revenue)) OVER (ORDER BY Month), 0), 1) AS Revenue_Percent_Change
+
+FROM Sellout_Q4
+GROUP BY Month
+ORDER BY Month;
+```
 
 ---
 
@@ -43,6 +66,17 @@
 - **Double down on 65" line-up with promotions and wide availability**  
 - **Invest in premium segments (75”+) where revenue per unit is high — strengthen visibility & stock**
 
+```SQL
+-- Top-Selling Models
+SELECT
+	  Model,
+	  SUM(Quantity) AS Units_Sold,
+	  SUM(Revenue) AS Total_Revenue
+FROM Sellout_Q4
+GROUP BY Model
+ORDER BY Total_Revenue DESC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+```
 
 ---
 
@@ -83,7 +117,17 @@
 - **For high-end underperformers → check availability, pricing, and promotion visibility**  
 - **Focus marketing and inventory on top-selling models only to streamline sales**
 
-
+```SQL
+-- Model Performance – Identify Underperformers
+SELECT
+  Model,
+  SUM(Quantity) AS Units_Sold,
+  SUM(Revenue) AS Revenue
+FROM Sellout_Q4
+GROUP BY Model
+HAVING SUM(Quantity) < 10  -- You can adjust this threshold
+ORDER BY Revenue ASC;
+```
 ---
 ### 4. Store Performance (Good)
 
@@ -101,6 +145,7 @@
 | eXtra Tahlia                           | 578        | 1,548,232 |
 | eXtra Dammam (Alfaysalya)              | 558        | 1,528,278 |
 | Extra Alraed                           | 275        | 1,479,718 |
+
 
 ### Top 10 Bad Performers
 
@@ -123,6 +168,16 @@
   - Audit low-performing locations  
   - Consider replacing or restructuring support in consistently underperforming outlets
 
+```SQL
+SELECT TOP 10
+  Store_Name,
+  SUM(Quantity) AS Units_Sold,
+  SUM(Revenue) AS Revenue
+FROM Sellout_Q4
+GROUP BY Store_Name
+ORDER BY Revenue DESC; -- Good performers
+-- ORDER BY Revenue ASC; -- Bad performers
+```
 ---
 
 ### 5. Customer (Retailer) Performance
@@ -143,7 +198,16 @@
   - Strengthen partnerships with Extra and Manea — optimize stock, promotions, and exclusives  
   - Evaluate lower-performing retailers - Are sales tied to store traffic, display quality, or stock gaps?
 
-
+```SQL
+-- Customer (Retailer) Performance
+SELECT
+  Customer,
+  SUM(Quantity) AS Units_Sold,
+  SUM(Revenue) AS Revenue
+FROM Sellout_Q4
+GROUP BY Customer
+ORDER BY Revenue DESC;
+```
 ---
 ### 6. Price Inconsistency Across Models
 
@@ -163,6 +227,19 @@ Sample Data:
 
 ### ✅ Recommendation
 - Enforce pricing rules across locations (Work with retail partners to standardize pricing) and validate outliers during reporting.
+
+```SQL
+-- Price Consistency Check
+SELECT
+  Model,
+  MIN(Sales_Price) AS Min_Price,
+  MAX(Sales_Price) AS Max_Price,
+  MAX(Sales_Price) - MIN(Sales_Price) AS Price_Diff
+FROM Sellout_Q4
+GROUP BY Model
+HAVING MAX(Sales_Price) - MIN(Sales_Price) > 300  -- Adjust threshold as needed
+ORDER BY Price_Diff DESC;
+```
 
 ---
 
@@ -185,6 +262,17 @@ Sample Data:
 - Double down on Central & West with focused inventory and campaign investment  
 - Consider reallocating resources from low-conversion areas or boosting visibility in Southern region
 
+```SQL
+-- Regional/Department Breakdown
+SELECT
+  Department,
+  SUM(Quantity) AS Units_Sold,
+  SUM(Revenue) AS Revenue
+FROM Sellout_Q4
+GROUP BY Department
+ORDER BY Revenue DESC;
+```
+
 ---
 
 ## (II) Market Share and Status
@@ -202,6 +290,19 @@ Sample Data:
 ### ✅ Recommendation
 - Continue strategies that fueled this growth
 
+```SQL
+-- 1. TCL Group’s Market Share (Jan 24)
+SELECT
+  PERIOD,
+  SUM(SALES_UNITS) AS TCL_Units,
+  SUM(SALES_VALUE_SAR) AS TCL_Revenue,
+  ROUND(SUM(SALES_VALUE_SAR) * 100.0 / 
+        (SELECT SUM(SALES_VALUE_SAR) FROM KSATVTEST WHERE PERIOD = KS.PERIOD), 2) AS TCL_Market_Share_Percent
+FROM KSATVTEST KS
+WHERE BRAND IN ('TCL', 'TCL PRO') AND PERIOD IN ('JAN 23', 'JAN 24')
+GROUP BY PERIOD
+ORDER BY PERIOD;
+```
 ---
 
 ### 2. Brand Comparison
@@ -227,6 +328,25 @@ Sample Data:
 - Learn from LG’s positioning and pricing strategy
 - Focus marketing on premium upgrades to challenge top 2
 
+```SQL
+-- 2. Competitor Comparison (Jan 24)
+SELECT
+  TOP 5
+  CASE 
+    WHEN BRAND IN ('TCL', 'TCL PRO') THEN 'TCL Group' 
+    ELSE BRAND 
+  END AS Brand_Group,
+  SUM(SALES_UNITS) AS Units_Sold,
+  SUM(SALES_VALUE_SAR) AS Revenue
+FROM KSATVTEST
+WHERE PERIOD = 'JAN 24'
+GROUP BY
+  CASE 
+    WHEN BRAND IN ('TCL', 'TCL PRO') THEN 'TCL Group' 
+    ELSE BRAND 
+  END
+ORDER BY Revenue DESC;
+```
 
 
 
