@@ -409,25 +409,18 @@ ORDER BY Revenue DESC;
 ```
 ---
 
-# ✅ Conclusion Summary
 
-### 1. What TCL does wrong or has Setbacks in
-- Sales dropped in December (−5.4% units, −10.9% revenue)
-- Over 20 models sold fewer than 10 units — including high-end models
-- Significant pricing inconsistencies (SAR 349 to SAR 99,999)
-- Underperformance in the Southern region (only ~8.7M SAR revenue)
-- Lower average selling price compared to competitors like LG
-- Some retail partners and store locations underperforming
+## ✅ Conclusion Summary
 
-### 2. Solution / Recommendation
-- Focus promotions and stock on 65” models and high-value SKUs (75"+)
-- Phase out slow-moving models; fix visibility and pricing for high-end ones
-- Standardize pricing across locations; flag and review outliers
-- Reinvest in high-performing stores; audit and optimize low performers
-- Strengthen partnerships with Extra and Manea; assess weaker retailers
-- Boost investment in Central & West; improve coverage in South
-- Push premium model sales to grow revenue per unit
-- Continue strategies that led to market share growth
+- **65-inch models** are best-sellers — push stock and promotions here.
+- **Premium models (75”+)** show strong revenue potential — scale visibility and availability.
+- **20+ models underperformed** — phase out low-sellers and optimize SKU lineup.
+- **Top stores and retailers (Extra, Manea)** are key drivers — double down on partnerships.
+- **Significant price gaps** exist — standardize pricing and fix data issues.
+- **Central & West regions** perform best — focus campaigns here.
+- **TCL’s market share is growing** — continue momentum with value and premium mix.
+- **Competitors like LG earn more per unit** — increase average selling price to compete better.
+
 
 
 
