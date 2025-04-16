@@ -16,21 +16,30 @@ The task involved analyzing 3 months of TCL sell-out data, alongside a market st
 
 ## (I) Sellout Q4 Analysis
 ---
-### 1. TCL Sales and Quantity Trend by Month
+### 1. ## 📆 Monthly Sales Trend
 
+### 📊 Summary Table
 
-| Month | Total Units Sold | Total Revenue  | Units Diff | Units % Change   | Revenue Diff  | Revenue % Change |
-|-------|------------------|----------------|------------|------------------|---------------|------------------|
-| 9     | 654              | 1,874,912      | -          | -                | -             | -                |
-| 10    | 7,412            | 20,597,028     | 6,758      | 1033.3%          | 18,722,116    | 998.6%           |
-| 11    | 8,176            | 21,813,068     | 764        | 10.3%            | 1,216,040     | 5.9%             |
-| 12    | 7,735            | 19,427,642     | -441       | -5.4%            | -2,385,426    | -10.9%           |
+| Month | Units Sold | Revenue (SAR) | Units Δ | Units % Δ | Revenue Δ | Revenue % Δ |
+|-------|------------|---------------|---------|------------|------------|---------------|
+| 9     | 654        | 1,874,912     | –       | –          | –          | –             |
+| 10    | 7,412      | 20,597,028    | 6,758   | 1,033.3%   | 18,722,116 | 998.6%        |
+| 11    | 8,176      | 21,813,068    | 764     | 10.3%      | 1,216,040  | 5.9%          |
+| 12    | 7,735      | 19,427,642    | -441    | -5.4%      | -2,385,426 | -10.9%        |
 
+---
 
 ### 🔍 Insight
-- Oct boom: Units jumped 1,033% (from 654 to 7,412), revenue up 999% — likely campaign launch or seasonal spike.  
-- Nov peak: Continued growth (+10% units, +6% revenue).  
-- Dec dip: Sales dropped by 441 units (-5.4%), revenue down 2.4M SAR (-10.9%).
+- Massive growth in October (likely campaign-driven)
+- November stabilized with moderate growth
+- December saw a drop in both units and revenue
+
+### ✅ Recommendation
+- Analyze October campaigns and replicate what worked
+- Investigate revenue dip in December — review product mix, stock, or demand drop
+- Plan early Q4 strategies to maintain momentum into year-end
+
+
 
 ```SQL
 SELECT
@@ -56,36 +65,38 @@ ORDER BY Month;
 
 ---
 
-### 2. Top-Selling TCL Models
+### 2. 🔝 Top-Selling Models
 
-| Model   | Units Sold | Total Revenue |
+### 📊 Summary Table
+
+| Model   | Units Sold | Revenue (SAR) |
 |---------|------------|----------------|
-| 65C655  | 2983       | 7,723,606      |
-| 65V6B   | 3189       | 6,093,770      |
-| 65T8B   | 1130       | 3,381,800      |
+| 65C655  | 2,983      | 7,723,606      |
+| 65V6B   | 3,189      | 6,093,770      |
+| 65T8B   | 1,130      | 3,381,800      |
 | 75C655  | 740        | 2,839,038      |
-| 65P69B  | 1242       | 2,490,435      |
+| 65P69B  | 1,242      | 2,490,435      |
 | 85C655  | 454        | 2,307,492      |
 | 98P745  | 257        | 1,929,731      |
 | 65P71B  | 993        | 1,907,347      |
 | 55C655  | 958        | 1,897,551      |
 | 75P755  | 615        | 1,813,170      |
 
-
 ### 🔍 Insight
-- 65-inch models dominate: 6 out of top 10 are 65”, led by 65C655 and 65V6B  
-- High-value models like 75C655, 85C655, and even 98P745 show strong premium interest  
+- 65-inch models dominate top sellers (6 out of 10)
+- Premium models (75", 85", 98") also perform well
+- 65C655 and 65V6B are consistent leaders in both units and revenue
 
 ### ✅ Recommendation
-- **Double down on 65" line-up with promotions and wide availability**  
-- **Invest in premium segments (75”+) where revenue per unit is high — strengthen visibility & stock**
+- Focus promotions and inventory on 65" models
+- Expand premium segment (75"+) to drive high-value growth
+
 
 ```SQL
--- Top-Selling Models
 SELECT
-	  Model,
-	  SUM(Quantity) AS Units_Sold,
-	  SUM(Revenue) AS Total_Revenue
+  Model,
+  SUM(Quantity) AS Units_Sold,
+  SUM(Revenue) AS Total_Revenue
 FROM Sellout_Q4
 GROUP BY Model
 ORDER BY Total_Revenue DESC
@@ -94,126 +105,152 @@ OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
 
 ---
 
-### 3. Underperforming TCL Models
+### 3. ⚠️ Underperforming Models (Sold < 10 Units)
 
-| Model   | Units Sold | Revenue  |
-|---------|------------|----------|
-| 32D310  | 2          | 638      |
-| 50C635  | 2          | 1,400    |
-| 55C735  | 2          | 1,998    |
-| 55C725  | 1          | 2,149    |
-| 55P617  | 2          | 3,198    |
-| 65C635  | 2          | 4,198    |
-| 55C635  | 4          | 4,694    |
-| 50P637  | 4          | 4,894    |
-| 50P71B  | 4          | 5,396    |
-| 75P637  | 2          | 5,398    |
-| 55C835  | 4          | 5,996    |
-| 55C825  | 2          | 6,598    |
-| 75C955  | 2          | 7,198    |
-| 75C735  | 4          | 7,998    |
-| 65T635  | 7          | 11,943   |
-| 55P61B  | 9          | 13,041   |
-| 58T635  | 9          | 13,527   |
-| 58P635  | 9          | 13,903   |
-| 75C845  | 7          | 28,482   |
-| 65C735  | 4          | 28,998   |
-| 75C645  | 9          | 29,605   |
-| 98X955  | 2          | 149,998  |
+### 📊 Summary Table
+
+| Model   | Units Sold | Revenue (SAR) | Avg. Price (SAR) |
+|---------|------------|----------------|------------------|
+| 32D310  | 2          | 638            | 319              |
+| 50C635  | 2          | 1,400          | 700              |
+| 55C735  | 2          | 1,998          | 999              |
+| 55C725  | 1          | 2,149          | 2,149            |
+| 55P617  | 2          | 3,198          | 1,599            |
+| 65C635  | 2          | 4,198          | 2,099            |
+| 55C635  | 4          | 4,694          | 1,173            |
+| 50P637  | 4          | 4,894          | 1,223            |
+| 50P71B  | 4          | 5,396          | 1,349            |
+| 75P637  | 2          | 5,398          | 2,699            |
+| 55C835  | 4          | 5,996          | 1,499            |
+| 55C825  | 2          | 6,598          | 3,299            |
+| 75C955  | 2          | 7,198          | 3,599            |
+| 75C735  | 4          | 7,998          | 1,999            |
+| 65T635  | 7          | 11,943         | 1,706            |
+| 55P61B  | 9          | 13,041         | 1,522            |
+| 58T635  | 9          | 13,527         | 1,503            |
+| 58P635  | 9          | 13,903         | 1,544            |
+| 75C845  | 7          | 28,482         | 4,068            |
+| 65C735  | 4          | 28,998         | 2,499            |
+| 75C645  | 9          | 29,605         | 3,289            |
+| 98X955  | 2          | 149,998        | 74,999           |
 
 ### 🔍 Insight
-- 20+ models sold fewer than 10 units across 3 months  
-- Some are low-end (e.g. 32D310) — likely phased out or irrelevant  
-- Others are premium models (75C955, 98X955) — low volume despite high price  
+- 20+ models sold fewer than 10 units in total
+- Mix of **low-end** models and **high-value flagships** (e.g., 98X955)
+- Some premium models show very low volume despite high price points
 
 ### ✅ Recommendation
-- **Phase out or consolidate slow movers**  
-- **For high-end underperformers → check availability, pricing, and promotion visibility**  
-- **Focus marketing and inventory on top-selling models only to streamline sales**
+- Phase out or consolidate low-volume models
+- For high-end underperformers, review pricing, availability, and marketing
+- Focus inventory and promotions on consistently selling models
+
 
 ```SQL
--- Model Performance – Identify Underperformers
 SELECT
   Model,
   SUM(Quantity) AS Units_Sold,
-  SUM(Revenue) AS Revenue
+  SUM(Revenue) AS Total_Revenue,
+  AVG(Sales_Price) AS Avg_Sales_Price
 FROM Sellout_Q4
 GROUP BY Model
-HAVING SUM(Quantity) < 10  -- You can adjust this threshold
-ORDER BY Revenue ASC;
+HAVING SUM(Quantity) < 10
+ORDER BY Total_Revenue ASC;
 ```
 ---
-### 4. Store Performance (Good)
+### 4. 🏪 Store Performance
 
-### Top 10 Good Performers
+### 🥇 Top 10 Stores by Revenue
 
-| Store Name                             | Units Sold | Revenue   |
-|----------------------------------------|------------|-----------|
-| Extra Jizan                            | 2170       | 4,778,399 |
-| eXtra Sultan                           | 1024       | 3,467,877 |
-| eXtra RAKA                             | 837        | 2,562,654 |
-| manea Alrimal                          | 480        | 2,270,242 |
-| Almanea Albustan King fahad Rd Khobar  | 760        | 2,156,760 |
-| eXtra Medina Aaliah mall               | 702        | 1,867,900 |
-| Extra aziziyah DMM                     | 574        | 1,598,442 |
-| eXtra Tahlia                           | 578        | 1,548,232 |
-| eXtra Dammam (Alfaysalya)              | 558        | 1,528,278 |
-| Extra Alraed                           | 275        | 1,479,718 |
+| Store Name                                | Units Sold | Revenue (SAR) |
+|-------------------------------------------|------------|----------------|
+| Extra Jizan                               | 2,170      | 4,778,399      |
+| eXtra Sultan                              | 1,024      | 3,467,877      |
+| eXtra RAKA                                | 837        | 2,562,654      |
+| manea Alrimal                             | 480        | 2,270,242      |
+| Almanea Albustan King fahad Rd Khobar     | 760        | 2,156,760      |
+| eXtra Medina Aaliah mall                  | 702        | 1,867,900      |
+| Extra aziziyah DMM                        | 574        | 1,598,442      |
+| eXtra Tahlia                              | 578        | 1,548,232      |
+| eXtra Dammam (Alfaysalya)                 | 558        | 1,528,278      |
+| Extra Alraed                              | 275        | 1,479,718      |
 
+---
 
-### Top 10 Bad Performers
+### ❌ Bottom 10 Stores by Revenue
 
-| Store Name                                | Units Sold | Revenue |
-|-------------------------------------------|------------|---------|
-| Saco Jabal Thor Makkah                    | 4          | 8,536   |
-| Al Faislaiah District DMM (Jarir)         | 6          | 13,194  |
-| Saco Khurais Riyadh                       | 6          | 16,194  |
-| BH Alaskri RD                             | 17         | 27,502  |
-| Marwa (Mandreen) Jed (BH)                 | 30         | 52,940  |
-| Saco world King Abdullah St Riyadh        | 20         | 55,236  |
-| blackbox King Faisal                      | 28         | 68,278  |
-| Saco Tahlia Jeddah                        | 34         | 78,286  |
-| Lulu Hypermarket Marwah Jeddah            | 47         | 80,993  |
-| LuLu Hypermarket Al Yasmin Riyadh         | 49         | 86,991  |
+| Store Name                                 | Units Sold | Revenue (SAR) |
+|--------------------------------------------|------------|----------------|
+| Saco Jabal Thor Makkah                     | 4          | 8,536          |
+| Al Faislaiah District DMM (Jarir)          | 6          | 13,194         |
+| Saco Khurais Riyadh                        | 6          | 16,194         |
+| BH Alaskri RD                              | 17         | 27,502         |
+| Marwa (Mandreen) Jed (BH)                  | 30         | 52,940         |
+| Saco world King Abdullah St Riyadh         | 20         | 55,236         |
+| blackbox King Faisal                       | 28         | 68,278         |
+| Saco Tahlia Jeddah                         | 34         | 78,286         |
+| Lulu Hypermarket Marwah Jeddah             | 47         | 80,993         |
+| LuLu Hypermarket Al Yasmin Riyadh          | 49         | 86,991         |
 
+---
 
-### ✅ Recommendations
-  - Prioritize marketing, stock, and promoter investment in high-performing stores  
-  - Audit low-performing locations  
-  - Consider replacing or restructuring support in consistently underperforming outlets
+### 🔍 Insight
+- Top stores (led by Extra and Almanea branches) drive significant revenue and volume
+- Bottom 10 stores contribute minimal revenue despite national presence
+
+### ✅ Recommendation
+- Double down on high-performing stores with stock, promoter support, and campaigns
+- Audit underperforming outlets — assess visibility, footfall, and stock issues
+
 
 ```SQL
+-- Top 10 Stores
 SELECT TOP 10
   Store_Name,
   SUM(Quantity) AS Units_Sold,
   SUM(Revenue) AS Revenue
 FROM Sellout_Q4
 GROUP BY Store_Name
-ORDER BY Revenue DESC; -- Good performers
--- ORDER BY Revenue ASC; -- Bad performers
+ORDER BY Revenue DESC;
+
+-- Bottom 10 Stores
+SELECT TOP 10
+  Store_Name,
+  SUM(Quantity) AS Units_Sold,
+  SUM(Revenue) AS Revenue
+FROM Sellout_Q4
+GROUP BY Store_Name
+ORDER BY Revenue ASC;
 ```
 ---
 
-### 5. Customer (Retailer) Performance
+### 5. 🛒 Customer (Retailer) Performance
 
-| Customer       | Units Sold | Revenue    |
-|----------------|------------|------------|
-| Extra          | 13238      | 36,481,742 |
-| Manea          | 3549       | 11,139,333 |
-| LuLu           | 2788       | 5,657,764  |
-| Jarir          | 1664       | 3,917,896  |
-| Bin Homood     | 1372       | 2,811,153  |
-| Saco           | 408        | 1,408,292  |
-| Black Box      | 465        | 1,042,743  |
-| Tamkeen        | 234        | 694,316    |
-| Shita & Saif   | 259        | 559,411    |
+### 📊 Summary Table
 
-### ✅ Recommendations:
-  - Strengthen partnerships with Extra and Manea — optimize stock, promotions, and exclusives  
-  - Evaluate lower-performing retailers - Are sales tied to store traffic, display quality, or stock gaps?
+| Customer       | Units Sold | Revenue (SAR) |
+|----------------|------------|----------------|
+| Extra          | 13,238     | 36,481,742     |
+| Manea          | 3,549      | 11,139,333     |
+| LuLu           | 2,788      | 5,657,764      |
+| Jarir          | 1,664      | 3,917,896      |
+| Bin Homood     | 1,372      | 2,811,153      |
+| Saco           | 408        | 1,408,292      |
+| Black Box      | 465        | 1,042,743      |
+| Tamkeen        | 234        | 694,316        |
+| Shita & Saif   | 259        | 559,411        |
+
+---
+
+### 🔍 Insight
+- Extra and Manea dominate in both volume and revenue
+- Smaller players (e.g. Saco, Black Box, Shita & Saif) contribute relatively little
+
+### ✅ Recommendation
+- Strengthen partnerships with Extra and Manea (exclusive models, promotions)
+- Review performance with smaller retailers — assess visibility, traffic, and stock flow
+
 
 ```SQL
--- Customer (Retailer) Performance
 SELECT
   Customer,
   SUM(Quantity) AS Units_Sold,
@@ -223,27 +260,37 @@ GROUP BY Customer
 ORDER BY Revenue DESC;
 ```
 ---
-### 6. Price Inconsistency Across Models
+### 6. 💰 Price Consistency Check
 
-Sample Data:
-| Model       | Min_Price | Max_Price | Price_Diff    |
-|-------------|-----------|-------------|-------------|
-| 115X955 Max | 3,599      | 99,999     | 96,400      |
-| 98P745      | 1,599      | 25,998     | 24,399      |
-| 55P69B      | 1,334      | 23,984     | 22,650      |
-| 65T8B       | 1,999      | 21,989     | 19,990      |
-| 58V6B       | 1,399      | 13,592     | 12,193      |
-| 65C655      | 1,598      | 12,999     | 11,401      |
-| 75P69B      | 1,399      | 10,792     | 9,393       |
+### 📊 Models with Highest Price Differences
+
+| Model         | Min Price (SAR) | Max Price (SAR) | Price Diff (SAR) |
+|---------------|------------------|------------------|------------------|
+| 115X955 Max   | 3,599            | 99,999           | 96,400           |
+| 98P745        | 1,599            | 25,998           | 24,399           |
+| 55P69B        | 1,334            | 23,984           | 22,650           |
+| 65T8B         | 1,999            | 21,989           | 19,990           |
+| 58V6B         | 1,399            | 13,592           | 12,193           |
+| 65C655        | 1,598            | 12,999           | 11,401           |
+| 75P69B        | 1,399            | 10,792           | 9,393            |
+| 55P79B        | 1,399            | 10,194           | 8,795            |
+| 98C655        | 7,599            | 15,998           | 8,399            |
+| 85C655        | 2,299            | 9,998            | 7,699            |
+
+---
 
 ### 🔍 Insight
-- Found models with price differences from SAR 349 to SAR 99999 — May indicate lack of pricing control across locations or Data entry error
+- Major price inconsistencies: some models show differences over SAR 20K+
+- Top price gap is 115X955 Max with a SAR 96K difference
+- High variance may indicate lack of pricing control or data entry issues
 
 ### ✅ Recommendation
-- Enforce pricing rules across locations (Work with retail partners to standardize pricing) and validate outliers during reporting.
+- Enforce pricing rules and consistency across retail partners
+- Investigate outliers to fix possible data entry errors
+- Standardize price reporting and validate before analysis
+
 
 ```SQL
--- Price Consistency Check
 SELECT
   Model,
   MIN(Sales_Price) AS Min_Price,
@@ -251,33 +298,34 @@ SELECT
   MAX(Sales_Price) - MIN(Sales_Price) AS Price_Diff
 FROM Sellout_Q4
 GROUP BY Model
-HAVING MAX(Sales_Price) - MIN(Sales_Price) > 300  -- Adjust threshold as needed
 ORDER BY Price_Diff DESC;
 ```
 
 ---
 
-### 7. Regional Performance
+### 7. 🗺️ Regional Performance
 
+### 📊 Summary Table
 
-| Region   | Units Sold | Revenue (SAR)  |
-|----------|------------|----------------|
-| Central  | 6531       | 19,381,292     |
-| West     | 7077       | 18,859,826     |
-| East     | 6595       | 16,776,310     |
-| South    | 3774       | 8,695,222      |
+| Department | Units Sold | Revenue (SAR) |
+|------------|------------|----------------|
+| Central    | 6,531      | 19,381,292     |
+| West       | 7,077      | 18,859,826     |
+| East       | 6,595      | 16,776,310     |
+| South      | 3,774      | 8,695,222      |
+
+---
 
 ### 🔍 Insight
-- Central & West regions lead in unit sales and revenue (6.5K–7K units each)  
-- Central generates the highest revenue (~19.4M SAR), despite fewer units than West  
-- South lags significantly — only 3.7K units and ~8.7M SAR revenue  
+- Central and West regions lead in revenue and unit sales
+- South lags significantly in both — half the sales of other regions
 
 ### ✅ Recommendation
-- Double down on Central & West with focused inventory and campaign investment  
-- Consider reallocating resources from low-conversion areas or boosting visibility in Southern region
+- Focus inventory and campaigns in Central & West to maximize returns
+- Investigate Southern region’s low performance — boost visibility, assess store presence or demand gaps
+
 
 ```SQL
--- Regional/Department Breakdown
 SELECT
   Department,
   SUM(Quantity) AS Units_Sold,
