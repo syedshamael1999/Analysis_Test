@@ -1,6 +1,6 @@
 # Report
 
-## Sellout Q4 Analysis
+## (I) Sellout Q4 Analysis
 ---
 ### 1. TCL Sales and Quantity Trend by Month
 
@@ -187,7 +187,7 @@ Sample Data:
 
 ---
 
-## Market Share and Status
+## (II) Market Share and Status
 
 ### 1. TCL Market Share (Jan 2024)
 
