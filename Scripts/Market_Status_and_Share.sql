@@ -1,8 +1,4 @@
-/* Market Status and Share
-This is market data, not just TCL — includes competitors.
-
-Data: JAN 23 and JAN 24 */
-
+/* (II) Market Share and Status */
 
 -- 1. TCL Group’s Market Share (Jan 24)
 SELECT
@@ -15,7 +11,6 @@ FROM KSATVTEST KS
 WHERE BRAND IN ('TCL', 'TCL PRO') AND PERIOD IN ('JAN 23', 'JAN 24')
 GROUP BY PERIOD
 ORDER BY PERIOD;
-
 
 -- 2. Competitor Comparison (Jan 24)
 SELECT
@@ -34,3 +29,12 @@ GROUP BY
     ELSE BRAND 
   END
 ORDER BY Revenue DESC;
+
+-- 3. Average Selling price by Brand
+SELECT
+  BRAND,
+  ROUND(AVG(PRICE_SAR), 0) AS Avg_Price_SAR
+FROM KSATVTEST
+WHERE PERIOD = 'JAN 24'
+GROUP BY BRAND
+ORDER BY Avg_Price_SAR DESC;
