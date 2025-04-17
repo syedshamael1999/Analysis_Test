@@ -342,7 +342,7 @@ ORDER BY Revenue DESC;
 
 ## (II) Market Share and Status
 
-### 1. TCL Market Share (Jan 2024)
+### 1. 📊 TCL Market Share (Jan 2024)
 
 | PERIOD | TCL Units        | TCL Revenue | TCL Market Share (%)   |
 |--------|------------------|-------------|------------------------|
@@ -410,6 +410,30 @@ GROUP BY
   END
 ORDER BY Revenue DESC;
 ```
+
+## 3. 💸 Average Selling Price by Brand (Jan 24)
+
+### 📊 Highlights
+
+| Brand     | Avg. Price (SAR) |
+|-----------|------------------|
+| SAMSUNG   | 5,820            |
+| SONY      | 5,389            |
+| LG        | 4,861            |
+| TCL       | 2,331            |
+
+---
+
+### 🔍 Insight
+- **TCL’s average price** (SAR 2,331) is **significantly lower** than LG, Sony, and Samsung
+- LG earns more revenue from fewer units → Higher pricing strategy
+
+### ✅ Recommendation
+- Push **higher-value models** to lift revenue per unit
+- Learn from LG/Sony on pricing strategy and positioning
+- Focus marketing on **premium features & sizes** to compete upmarket
+
+
 ---
 
 
