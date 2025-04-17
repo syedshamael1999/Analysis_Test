@@ -114,6 +114,27 @@ The task involved analyzing 3 months of TCL sell-out data, alongside a market st
 - Reinforce efforts in Central/West to return to peak levels
 
 ---
+## 6. 💸 Price Inconsistency
+
+| Model         | Min Price | Max Price | Price Diff |
+|---------------|-----------|-----------|------------|
+| 115X955 Max   | 3,599     | 99,999    | 96,400     |
+| 98P745        | 1,599     | 25,998    | 24,399     |
+| 55P69B        | 1,334     | 23,984    | 22,650     |
+| 65T8B         | 1,999     | 21,989    | 19,990     |
+| 58V6B         | 1,399     | 13,592    | 12,193     |
+| 65C655        | 1,598     | 12,999    | 11,401     |
+
+- Extreme price variation (SAR 10K–96K) across key models
+- Likely caused by lack of price controls or data entry issues
+
+### ✅ Recommendation
+- Implement centralized pricing policy and validate in reports
+- Audit stores with large gaps to identify pricing leaks or system errors
+- Set thresholds to flag and resolve extreme price differences
+
+
+---
 
 ## (II) Market Share and Status
 
@@ -214,14 +235,11 @@ ORDER BY Revenue DESC;
 
 ## ✅ Conclusion Summary
 
-- **65-inch models** are best-sellers — push stock and promotions here.
-- **Premium models (75”+)** show strong revenue potential — scale visibility and availability.
-- **20+ models underperformed** — phase out low-sellers and optimize SKU lineup.
-- **Top stores and retailers (Extra, Manea)** are key drivers — double down on partnerships.
-- **Significant price gaps** exist — standardize pricing and fix data issues.
-- **Central & West regions** perform best — focus campaigns here.
-- **TCL’s market share is growing** — continue momentum with value and premium mix.
-- **Competitors like LG earn more per unit** — increase average selling price to compete better.
+- Poor follow-up after October: High-performing models lost visibility or stock by December.
+- Top stores underperformed: Several key outlets dropped 60–90% in revenue with no recovery plan.
+- Retailer inconsistency: Partners like Manea & Jarir declined sharply — unlike Extra.
+- Inventory imbalance: Premium and top-selling models like 65T8B were missing in peak sales period.
+- Regional focus shifted: No reinforcement in strong areas (Central/West); South grew without support.
 
 
 
