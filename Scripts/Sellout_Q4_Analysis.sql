@@ -1,6 +1,6 @@
 /*(I) Sellout Q4 Analysis*/
 
--- 1. Monthly Sales Trend
+-- Monthly Sales Trend
 SELECT
   Month,
   SUM(Quantity) AS Total_Units_Sold,
@@ -21,73 +21,56 @@ FROM Sellout_Q4
 GROUP BY Month
 ORDER BY Month;
 
--- 2. Top-Selling Models
+/* Side-by-side comparison - Oct Vs Dec */
+
+-- 1. Model Performance: Oct vs Dec
 SELECT
   Model,
-  SUM(Quantity) AS Units_Sold,
-  SUM(Revenue) AS Total_Revenue
+  SUM(CASE WHEN Month = 10 THEN Quantity ELSE 0 END) AS Oct_Units,
+  SUM(CASE WHEN Month = 12 THEN Quantity ELSE 0 END) AS Dec_Units,
+  SUM(CASE WHEN Month = 10 THEN Revenue ELSE 0 END) AS Oct_Revenue,
+  SUM(CASE WHEN Month = 12 THEN Revenue ELSE 0 END) AS Dec_Revenue
 FROM Sellout_Q4
+WHERE Month IN (10, 12)
 GROUP BY Model
-ORDER BY Total_Revenue DESC
-OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+ORDER BY Oct_Revenue DESC;
 
--- 3. Underperforming Models (Sold < 10 Units)
+-- 2. Store Performance: Oct vs Dec
 SELECT
-  Model,
-  SUM(Quantity) AS Units_Sold,
-  SUM(Revenue) AS Total_Revenue,
-  AVG(Sales_Price) AS Avg_Sales_Price
-FROM Sellout_Q4
-GROUP BY Model
-HAVING SUM(Quantity) < 10
-ORDER BY Total_Revenue ASC;
-
--- 4. Store Performance
--- Top 10 Stores
-SELECT TOP 10
   Store_Name,
-  SUM(Quantity) AS Units_Sold,
-  SUM(Revenue) AS Revenue
+  SUM(CASE WHEN Month = 10 THEN Quantity ELSE 0 END) AS Oct_Units,
+  SUM(CASE WHEN Month = 12 THEN Quantity ELSE 0 END) AS Dec_Units,
+  SUM(CASE WHEN Month = 10 THEN Revenue ELSE 0 END) AS Oct_Revenue,
+  SUM(CASE WHEN Month = 12 THEN Revenue ELSE 0 END) AS Dec_Revenue
 FROM Sellout_Q4
+WHERE Month IN (10, 12)
 GROUP BY Store_Name
-ORDER BY Revenue DESC;
+ORDER BY Oct_Revenue DESC;
 
--- Bottom 10 Stores
-SELECT TOP 10
-  Store_Name,
-  SUM(Quantity) AS Units_Sold,
-  SUM(Revenue) AS Revenue
-FROM Sellout_Q4
-GROUP BY Store_Name
-ORDER BY Revenue ASC;
-
--- 5. Customer (Retailer) Performance
+-- 3. Retailer (Customer) Performance: Oct vs Dec
 SELECT
   Customer,
-  SUM(Quantity) AS Units_Sold,
-  SUM(Revenue) AS Revenue
+  SUM(CASE WHEN Month = 10 THEN Quantity ELSE 0 END) AS Oct_Units,
+  SUM(CASE WHEN Month = 12 THEN Quantity ELSE 0 END) AS Dec_Units,
+  SUM(CASE WHEN Month = 10 THEN Revenue ELSE 0 END) AS Oct_Revenue,
+  SUM(CASE WHEN Month = 12 THEN Revenue ELSE 0 END) AS Dec_Revenue
 FROM Sellout_Q4
+WHERE Month IN (10, 12)
 GROUP BY Customer
-ORDER BY Revenue DESC;
+ORDER BY Oct_Revenue DESC;
 
--- 6. Price Consistency Check
-SELECT
-  Model,
-  MIN(Sales_Price) AS Min_Price,
-  MAX(Sales_Price) AS Max_Price,
-  MAX(Sales_Price) - MIN(Sales_Price) AS Price_Diff
-FROM Sellout_Q4
-GROUP BY Model
-ORDER BY Price_Diff DESC;
 
--- 7. Regional Performance
+-- 4. Region Performance: Oct vs Dec
 SELECT
   Department,
-  SUM(Quantity) AS Units_Sold,
-  SUM(Revenue) AS Revenue
+  SUM(CASE WHEN Month = 10 THEN Quantity ELSE 0 END) AS Oct_Units,
+  SUM(CASE WHEN Month = 12 THEN Quantity ELSE 0 END) AS Dec_Units,
+  SUM(CASE WHEN Month = 10 THEN Revenue ELSE 0 END) AS Oct_Revenue,
+  SUM(CASE WHEN Month = 12 THEN Revenue ELSE 0 END) AS Dec_Revenue
 FROM Sellout_Q4
+WHERE Month IN (10, 12)
 GROUP BY Department
-ORDER BY Revenue DESC;
+ORDER BY Oct_Revenue DESC;
 
 
 
