@@ -73,6 +73,17 @@ GROUP BY Department
 ORDER BY Oct_Revenue DESC;
 
 
+-- Price Inconsistency 
+SELECT
+  Model,
+  MIN(Sales_Price) AS Min_Price,
+  MAX(Sales_Price) AS Max_Price,
+  MAX(Sales_Price) - MIN(Sales_Price) AS Price_Diff
+FROM Sellout_Q4
+GROUP BY Model
+HAVING MAX(Sales_Price) - MIN(Sales_Price) > 0
+ORDER BY Price_Diff DESC;
+
 
 
 
